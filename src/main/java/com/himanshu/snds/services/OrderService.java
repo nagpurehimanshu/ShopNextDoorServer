@@ -106,7 +106,9 @@ public class OrderService {
         List<Orders> ordersList = orderRepository.findActiveOrderByCustomerAndShop(customer_username, shop_username);
 
         if(ordersList.size()==0) return "0";
-        if(ordersList.size()>0 && ordersList.get(0).getOrder_status()=="completed") return "0";
+        if(ordersList.size()>0){
+            if(ordersList.get(0).getOrder_status().equals("completed") || ordersList.get(0).getOrder_status().equals("rejected") || ordersList.get(0).getOrder_status().equals("cancelled") ) return "0";
+        }
         return "1";
     }
 
@@ -134,5 +136,29 @@ public class OrderService {
         }
 
         return orderRequestsList;
+    }
+
+    public String updateOrderStatus(String order_number, String order_status) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String curr_datetime = sdf.format(new Date());
+        /*if(order_status.equals("accepted")){
+            orderRepository.updateAcceptedOrderStatus(order_number, order_status, curr_datetime);
+        }else if(order_status.equals("completed")){
+            orderRepository.updateCompletedOrderStatus(order_number, order_status, curr_datetime);
+        }*/
+
+        Orders orders = orderRepository.findByOrderNumber(order_number);
+        orders.setOrder_status(order_status);
+
+        if(order_status.equals("accepted")){
+            orders.setOrder_acceptance_date(curr_datetime);
+        }else if(order_status.equals("completed")){
+            orders.setOrder_completion_date(curr_datetime);
+        }else if(order_status.equals("cancelled")){
+            orders.setOrder_completion_date(curr_datetime);
+        }
+        orderRepository.save(orders);
+
+        return "1";
     }
 }

@@ -172,4 +172,14 @@ public class Controller {
             return new ResponseEntity<List<OrderRequests>>(orderRequestsList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/updateOrderStatus")
+    ResponseEntity<String> updateOrderStatus(@RequestParam String order_number, @RequestParam String order_status){
+        try{
+            return new ResponseEntity<String>(orderService.updateOrderStatus(order_number, order_status), HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
