@@ -1,23 +1,23 @@
 package com.himanshu.snds.controller;
 
-import com.himanshu.snds.entities.Orders;
-import com.himanshu.snds.requests.CustomerRequests;
-import com.himanshu.snds.requests.OrderRequests;
-import com.himanshu.snds.requests.ShopRequests;
-import com.himanshu.snds.services.CustomerService;
-import com.himanshu.snds.services.OrderService;
-import com.himanshu.snds.services.ShopService;
-import lombok.extern.slf4j.Slf4j;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
-import org.hibernate.criterion.Order;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+        import com.himanshu.snds.entities.Orders;
+        import com.himanshu.snds.requests.CustomerRequests;
+        import com.himanshu.snds.requests.OrderRequests;
+        import com.himanshu.snds.requests.ShopRequests;
+        import com.himanshu.snds.services.CustomerService;
+        import com.himanshu.snds.services.OrderService;
+        import com.himanshu.snds.services.ShopService;
+        import lombok.extern.slf4j.Slf4j;
+        import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+        import org.hibernate.criterion.Order;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.http.HttpStatus;
+        import org.springframework.http.ResponseEntity;
+        import org.springframework.stereotype.Component;
+        import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
 @RestController("/")
 @Component
@@ -160,19 +160,6 @@ public class Controller {
         }
     }
 
-    @GetMapping("/getActiveOrdersList")
-    ResponseEntity<List<OrderRequests>> getActiveOrderList(@RequestParam String shop_username){
-        try{
-            return new ResponseEntity<List<OrderRequests>>(orderService.getActiveOrdersList(shop_username), HttpStatus.OK);
-        }catch (Exception e){
-            List<OrderRequests> orderRequestsList = new ArrayList<OrderRequests>();
-            orderRequestsList.add(new OrderRequests());
-            orderRequestsList.get(0).setResult("-1");
-            System.out.println(e.getMessage());
-            return new ResponseEntity<List<OrderRequests>>(orderRequestsList, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PutMapping("/updateOrderStatus")
     ResponseEntity<String> updateOrderStatus(@RequestParam String order_number, @RequestParam String order_status){
         try{
@@ -180,6 +167,19 @@ public class Controller {
         }catch (Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getOrdersByShop")
+    ResponseEntity<List<OrderRequests>> getOrdersByShop(@RequestParam String shop_username){
+        try{
+            return new ResponseEntity<List<OrderRequests>>(orderService.getOrdersByShop(shop_username), HttpStatus.OK);
+        }catch (Exception e){
+            List<OrderRequests> orderRequestsList = new ArrayList<OrderRequests>();
+            OrderRequests orderRequests = new OrderRequests();
+            orderRequestsList.add(orderRequests);
+            orderRequestsList.get(0).setResult("-1");
+            return new ResponseEntity<List<OrderRequests>>(orderRequestsList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

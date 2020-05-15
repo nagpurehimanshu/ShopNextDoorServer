@@ -43,4 +43,7 @@ dependencies {
             }
         }
     }
+
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.15.Final'
 }

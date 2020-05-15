@@ -44,4 +44,5 @@ dependencies {
     }
 
     compile group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter-sql-mysql'
+
 }

@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Component
 @Service
@@ -112,8 +113,29 @@ public class OrderService {
         return "1";
     }
 
-    public List<OrderRequests> getActiveOrdersList(String shop_username) {
-        List<Orders> ordersList = orderRepository.findActiveOrdersByShop(shop_username);
+
+    public String updateOrderStatus(String order_number, String order_status) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+        String curr_datetime = sdf.format(new Date());
+
+        Orders orders = orderRepository.findByOrderNumber(order_number);
+        orders.setOrder_status(order_status);
+
+        if(order_status.equals("accepted")){
+            orders.setOrder_acceptance_date(curr_datetime);
+        }else if(order_status.equals("completed")){
+            orders.setOrder_completion_date(curr_datetime);
+        }else if(order_status.equals("cancelled")){
+            orders.setOrder_completion_date(curr_datetime);
+        }
+        orderRepository.save(orders);
+
+        return "1";
+    }
+
+    public List<OrderRequests> getOrdersByShop(String shop_username) {
+        List<Orders> ordersList = orderRepository.findOrdersByShop(shop_username);
         List<OrderRequests> orderRequestsList = new ArrayList<OrderRequests>();
 
         for(int i=0; i<ordersList.size(); i++){
@@ -136,29 +158,5 @@ public class OrderService {
         }
 
         return orderRequestsList;
-    }
-
-    public String updateOrderStatus(String order_number, String order_status) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String curr_datetime = sdf.format(new Date());
-        /*if(order_status.equals("accepted")){
-            orderRepository.updateAcceptedOrderStatus(order_number, order_status, curr_datetime);
-        }else if(order_status.equals("completed")){
-            orderRepository.updateCompletedOrderStatus(order_number, order_status, curr_datetime);
-        }*/
-
-        Orders orders = orderRepository.findByOrderNumber(order_number);
-        orders.setOrder_status(order_status);
-
-        if(order_status.equals("accepted")){
-            orders.setOrder_acceptance_date(curr_datetime);
-        }else if(order_status.equals("completed")){
-            orders.setOrder_completion_date(curr_datetime);
-        }else if(order_status.equals("cancelled")){
-            orders.setOrder_completion_date(curr_datetime);
-        }
-        orderRepository.save(orders);
-
-        return "1";
     }
 }
