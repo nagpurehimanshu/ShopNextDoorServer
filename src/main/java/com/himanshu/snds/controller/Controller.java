@@ -38,7 +38,6 @@ public class Controller {
         try{
             return new ResponseEntity<CustomerRequests>(customerService.registerCustomer(customerRequests), HttpStatus.OK);
         }catch (Exception e){
-            //Log.trace(e.getMessage());
             customerRequests.setResult("4");
             System.out.println(e.getMessage());
             return new ResponseEntity<CustomerRequests>(customerRequests, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -179,6 +178,7 @@ public class Controller {
             OrderRequests orderRequests = new OrderRequests();
             orderRequestsList.add(orderRequests);
             orderRequestsList.get(0).setResult("-1");
+            System.out.println(e.getMessage());
             return new ResponseEntity<List<OrderRequests>>(orderRequestsList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
