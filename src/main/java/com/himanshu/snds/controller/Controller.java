@@ -69,6 +69,16 @@ public class Controller {
         }
     }
 
+    @PutMapping("/updateCustomer")
+    ResponseEntity<String> updateCustomer(@RequestParam String username, @RequestParam String mobile, @RequestParam String address){
+        try{
+            return new ResponseEntity<String>(customerService.updateCustomer(username, mobile, address), HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/registerShop")
     ResponseEntity<ShopRequests> registerShop(@RequestBody ShopRequests shopRequests){
         try{
@@ -103,6 +113,16 @@ public class Controller {
             shopRequestsList.add(new ShopRequests());
             shopRequestsList.get(0).setResult("0");
             return new ResponseEntity<List<ShopRequests>>(shopRequestsList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/updateShop")
+    ResponseEntity<String> updateShop(@RequestParam String username, @RequestParam String mobile, @RequestParam String address){
+        try{
+            return new ResponseEntity<String>(customerService.updateCustomer(username, mobile, address), HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

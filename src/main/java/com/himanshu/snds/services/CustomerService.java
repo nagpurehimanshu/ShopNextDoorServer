@@ -89,4 +89,12 @@ public class CustomerService {
         }
         return customerRequestsList;
     }
+
+    public String updateCustomer(String username, String mobile, String address) {
+        Customer customer = customerRepository.findByUsername(username);
+        customer.setMobile(mobile);
+        customer.setAddress(address);
+        customerRepository.save(customer);
+        return "1";
+    }
 }
