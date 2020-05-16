@@ -4,8 +4,12 @@ import com.himanshu.snds.entities.Shop;
 import com.himanshu.snds.repository.ShopRepository;
 import com.himanshu.snds.requests.ShopRequests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,5 +91,14 @@ public class ShopService {
 
     public void setVerification(String username, int value){
         shopRepository.setVerification(username, value);
+    }
+
+
+    public String updateShop(String username, String owner_mobile, String address) {
+        Shop shop = shopRepository.findByUsername(username);
+        shop.setOwner_mobile(owner_mobile);
+        shop.setAddress(address);
+        shopRepository.save(shop);
+        return "1";
     }
 }
