@@ -45,9 +45,9 @@ public class Controller {
     }
 
     @GetMapping("/getCustomer")
-    ResponseEntity<CustomerRequests> getCustomer(@RequestParam String username, @RequestParam String password){
+    ResponseEntity<CustomerRequests> getCustomer(@RequestParam String username){
         try{
-            return new ResponseEntity<CustomerRequests>(customerService.getCustomer(username, password), HttpStatus.OK);
+            return new ResponseEntity<CustomerRequests>(customerService.getCustomer(username), HttpStatus.OK);
         }catch(Exception e){
             CustomerRequests customerRequests = new CustomerRequests();
             customerRequests.setResult("3");
@@ -61,6 +61,7 @@ public class Controller {
         try{
             return new ResponseEntity<ShopRequests>(shopService.registerShop(shopRequests), HttpStatus.OK);
         }catch (Exception e){
+            //Server exception
             shopRequests.setResult("3");
             System.out.println(e.getMessage());
             return new ResponseEntity<ShopRequests>(shopRequests, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -182,4 +183,6 @@ public class Controller {
             return new ResponseEntity<List<OrderRequests>>(orderRequestsList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 }

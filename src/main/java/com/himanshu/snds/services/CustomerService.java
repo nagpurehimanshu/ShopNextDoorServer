@@ -45,9 +45,10 @@ public class CustomerService {
     }
 
 
-    public CustomerRequests getCustomer(String username, String password) {
-        Customer customer = customerRepository.findByUsernameAndByPassword(username, password);
+    public CustomerRequests getCustomer(String username) {
+        Customer customer = customerRepository.findByUsername(username);
         CustomerRequests customerRequests = new CustomerRequests();
+        //Customer Already Exists
         if(customer!=null){
             customerRequests.setName(customer.getName());
             customerRequests.setResult("1");
@@ -56,7 +57,9 @@ public class CustomerService {
             customerRequests.setGender(customer.getGender());
             customerRequests.setMobile(customer.getMobile());
             customerRequests.setPassword(customer.getPassword());
-        }else{
+        }
+        //Does not exist
+        else{
             customerRequests.setResult("2");
         }
         return customerRequests;
