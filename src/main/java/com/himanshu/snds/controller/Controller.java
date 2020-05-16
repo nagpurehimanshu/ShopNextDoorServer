@@ -56,6 +56,19 @@ public class Controller {
         }
     }
 
+    @GetMapping("/getCustomerList")
+    ResponseEntity<List<CustomerRequests>> getCustomerList(){
+        try{
+            return new ResponseEntity<List<CustomerRequests>>(customerService.getCustomerList(), HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            List<CustomerRequests> customerRequestsList = new ArrayList<CustomerRequests>();
+            customerRequestsList.add(new CustomerRequests());
+            customerRequestsList.get(0).setResult("0");
+            return new ResponseEntity<List<CustomerRequests>>(customerRequestsList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/registerShop")
     ResponseEntity<ShopRequests> registerShop(@RequestBody ShopRequests shopRequests){
         try{
@@ -69,9 +82,9 @@ public class Controller {
     }
 
     @GetMapping("/getShop")
-    ResponseEntity<ShopRequests> getShop(@RequestParam String username, @RequestParam String password){
+    ResponseEntity<ShopRequests> getShop(@RequestParam String username){
         try{
-            return new ResponseEntity<ShopRequests>(shopService.getShop(username, password), HttpStatus.OK);
+            return new ResponseEntity<ShopRequests>(shopService.getShop(username), HttpStatus.OK);
         }catch (Exception e){
             ShopRequests shopRequests = new ShopRequests();
             shopRequests.setResult("5");

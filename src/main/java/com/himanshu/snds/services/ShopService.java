@@ -38,8 +38,8 @@ public class ShopService {
         return shopRequests;
     }
 
-    public ShopRequests getShop(String username, String password){
-        Shop shop = shopRepository.findByUsernameAndByPassword(username, password);
+    public ShopRequests getShop(String username){
+        Shop shop = shopRepository.findByUsername(username);
         ShopRequests shopRequests = new ShopRequests();
 
         if(shop!=null){

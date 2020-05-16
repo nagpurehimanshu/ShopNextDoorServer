@@ -2,13 +2,16 @@ package com.himanshu.snds.services;
 
 import com.himanshu.snds.entities.Customer;
 import com.himanshu.snds.entities.Orders;
+import com.himanshu.snds.entities.Shop;
 import com.himanshu.snds.repository.CustomerRepository;
 import com.himanshu.snds.requests.CustomerRequests;
 import com.himanshu.snds.requests.OrderRequests;
+import com.himanshu.snds.requests.ShopRequests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -63,5 +66,27 @@ public class CustomerService {
             customerRequests.setResult("2");
         }
         return customerRequests;
+    }
+
+    public List<CustomerRequests> getCustomerList() {
+        List<Customer> customerList = customerRepository.getCustomerList();
+        List<CustomerRequests> customerRequestsList = new ArrayList<CustomerRequests>();
+
+        if(customerList.size()>0) {
+            for (int i = 0; i < customerList.size(); i++) {
+                customerRequestsList.add(new CustomerRequests());
+                customerRequestsList.get(i).setName(customerList.get(i).getName());
+                customerRequestsList.get(i).setAddress(customerList.get(i).getAddress());
+                customerRequestsList.get(i).setGender(customerList.get(i).getGender());
+                customerRequestsList.get(i).setMobile(customerList.get(i).getMobile());
+                customerRequestsList.get(i).setUsername(customerList.get(i).getUsername());
+                customerRequestsList.get(i).setPassword(customerList.get(i).getPassword());
+                customerRequestsList.get(i).setResult("1");
+            }
+        }else{
+            customerRequestsList.add(new CustomerRequests());
+            customerRequestsList.get(0).setResult("0");
+        }
+        return customerRequestsList;
     }
 }
