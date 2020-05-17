@@ -115,7 +115,7 @@ public class OrderService {
 
 
     public String updateOrderStatus(String order_number, String order_status) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("IST"));
         String curr_datetime = sdf.format(new Date());
 
