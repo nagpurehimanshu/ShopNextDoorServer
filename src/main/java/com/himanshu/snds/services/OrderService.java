@@ -3,6 +3,7 @@ package com.himanshu.snds.services;
 import com.himanshu.snds.entities.Orders;
 import com.himanshu.snds.entities.Shop;
 import com.himanshu.snds.repository.OrderRepository;
+import com.himanshu.snds.repository.ShopRepository;
 import com.himanshu.snds.requests.OrderRequests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import java.util.TimeZone;
 public class OrderService {
     @Autowired
     OrderRepository orderRepository;
+    ShopRepository shopRepository;
 
     public OrderRequests placeOrder(OrderRequests orderRequests){
         Orders newOrder = new Orders();
@@ -33,6 +35,7 @@ public class OrderService {
         newOrder.setShop_username(orderRequests.getShop_username());
         newOrder.setAmount(0);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("IST"));
         newOrder.setOrder_placed_date(sdf.format(new Date()));
         newOrder.setOrder_acceptance_date(null);
         newOrder.setOrder_completion_date(null);
@@ -52,9 +55,9 @@ public class OrderService {
 
     public OrderRequests getOrderDetails(String order_number){
         Orders orders = orderRepository.findByOrderNumber(order_number);
+        String address = shopRepository.getShopAddress(orders.getShop_username());
         OrderRequests orderRequests = new OrderRequests();
 
-        orderRequests.setResult("1");
         orderRequests.setOrder_number(orders.getOrder_number());
         orderRequests.setAmount(orders.getAmount());
         orderRequests.setCustomer_username(orders.getCustomer_username());
@@ -68,6 +71,7 @@ public class OrderService {
         orderRequests.setShop_username(orders.getShop_username());
         orderRequests.setCustomer_name(orders.getCustomer_name());
         orderRequests.setShop_name(orders.getShop_name());
+        orderRequests.setResult(address);
 
         return orderRequests;
     }

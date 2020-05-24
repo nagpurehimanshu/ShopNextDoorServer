@@ -26,6 +26,6 @@ public interface OrderRepository extends CrudRepository<Orders, Integer> {
     @Query("select o from Orders o where o.customer_username = ?1 and o.shop_username = ?2 order by o.order_number desc")
     List<Orders> findActiveOrderByCustomerAndShop(String customer_username, String shop_username);
 
-    @Query("select o from Orders o where o.shop_username = ?1")
+    @Query("select o from Orders o where o.shop_username = ?1 order by o.order_number desc")
     List<Orders> findOrdersByShop(String shop_username);
 }
