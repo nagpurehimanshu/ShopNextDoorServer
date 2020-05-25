@@ -33,6 +33,7 @@ public class ShopService {
             newShop.setOwner_name(shopRequests.getOwner_name());
             newShop.setOwner_mobile(shopRequests.getOwner_mobile());
             newShop.setEmail(shopRequests.getEmail());
+            newShop.setShop_type(shopRequests.getShop_type());
             newShop.setVerified(1);
             shopRepository.save(newShop);
 
@@ -62,6 +63,7 @@ public class ShopService {
             shopRequests.setEmail(shop.getEmail());
             shopRequests.setAddress(shop.getAddress());
             shopRequests.setName(shop.getName());
+            shopRequests.setShop_type(shop.getShop_type());
         }else{
             shopRequests.setResult("4");
         }
@@ -80,6 +82,7 @@ public class ShopService {
                 shopRequestsList.get(i).setAddress(shopList.get(i).getAddress());
                 shopRequestsList.get(i).setOwner_mobile(shopList.get(i).getOwner_mobile());
                 shopRequestsList.get(i).setEmail(shopList.get(i).getEmail());
+                shopRequestsList.get(i).setShop_type(shopList.get(i).getShop_type());
                 shopRequestsList.get(i).setOwner_name(shopList.get(i).getOwner_name());
                 shopRequestsList.get(i).setUsername(shopList.get(i).getUsername());
                 shopRequestsList.get(i).setPassword(shopList.get(i).getPassword());
