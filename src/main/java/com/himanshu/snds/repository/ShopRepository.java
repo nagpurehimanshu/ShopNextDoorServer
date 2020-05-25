@@ -27,7 +27,4 @@ public interface ShopRepository extends CrudRepository<Shop,Integer> {
     @Modifying
     @Query("update Shop s set s.verified = ?2 where s.username = ?1")
     void setVerification(String username, int value);
-
-    @Query("select s.address from Shop s where s.username = ?1")
-    String getShopAddress(String shop_username);
 }

@@ -19,7 +19,4 @@ public interface CustomerRepository extends CrudRepository<Customer,Integer> {
 
     @Query("select c from Customer c")
     List<Customer> getCustomerList();
-
-    @Query("select c.address from Customer c where c.username = ?1")
-    String getCustomerAddress(String customer_username);
 }

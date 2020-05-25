@@ -1,5 +1,6 @@
 package com.himanshu.snds.services;
 
+import com.himanshu.snds.entities.Customer;
 import com.himanshu.snds.entities.Orders;
 import com.himanshu.snds.entities.Shop;
 import com.himanshu.snds.repository.CustomerRepository;
@@ -57,7 +58,7 @@ public class OrderService {
 
     public OrderRequests getOrderDetails(String order_number){
         Orders orders = orderRepository.findByOrderNumber(order_number);
-        String address = shopRepository.getShopAddress(orders.getShop_username());
+        Shop shop = shopRepository.findByUsername(orders.getShop_username());
         OrderRequests orderRequests = new OrderRequests();
 
         orderRequests.setOrder_number(orders.getOrder_number());
@@ -73,7 +74,7 @@ public class OrderService {
         orderRequests.setShop_username(orders.getShop_username());
         orderRequests.setCustomer_name(orders.getCustomer_name());
         orderRequests.setShop_name(orders.getShop_name());
-        orderRequests.setResult(address);
+        orderRequests.setResult(shop.getAddress());
 
         return orderRequests;
     }
@@ -102,10 +103,9 @@ public class OrderService {
             orderRequestsList.get(i).setOrder_type(ordersList.get(i).getOrder_type());
             orderRequestsList.get(i).setCustomer_name(ordersList.get(i).getCustomer_name());
             orderRequestsList.get(i).setShop_name(ordersList.get(i).getShop_name());
-            orderRequestsList.get(i).setResult("1");
             orderRequestsList.get(i).setShop_username(ordersList.get(i).getShop_username());
-            String shop_address = shopRepository.getShopAddress(ordersList.get(i).getShop_username());
-            orderRequestsList.get(i).setResult(shop_address);
+            Shop shop = shopRepository.findByUsername(ordersList.get(i).getShop_username());
+            orderRequestsList.get(i).setResult(shop.getAddress());
         }
 
         return orderRequestsList;
@@ -149,7 +149,6 @@ public class OrderService {
         for(int i=0; i<ordersList.size(); i++){
             OrderRequests orderRequests = new OrderRequests();
             orderRequestsList.add(orderRequests);
-            String customer_address = customerRepository.getCustomerAddress(ordersList.get(i).getCustomer_username());
             orderRequestsList.get(i).setAmount(ordersList.get(i).getAmount());
             orderRequestsList.get(i).setCustomer_username(ordersList.get(i).getCustomer_username());
             orderRequestsList.get(i).setOrder_placed_date(ordersList.get(i).getOrder_placed_date());
@@ -162,7 +161,8 @@ public class OrderService {
             orderRequestsList.get(i).setOrder_type(ordersList.get(i).getOrder_type());
             orderRequestsList.get(i).setCustomer_name(ordersList.get(i).getCustomer_name());
             orderRequestsList.get(i).setShop_name(ordersList.get(i).getShop_name());
-            orderRequestsList.get(i).setResult(customer_address);
+            Customer customer = customerRepository.findByUsername(ordersList.get(i).getCustomer_username());
+            orderRequestsList.get(i).setResult(customer.getAddress());
             orderRequestsList.get(i).setShop_username(ordersList.get(i).getShop_username());
         }
 
