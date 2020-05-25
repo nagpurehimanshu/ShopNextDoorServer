@@ -21,6 +21,7 @@ public class Shop implements Serializable {
     String address;
     String owner_name;
     String owner_mobile;
+    String email;
     String username;
     String password;
     int verified;
@@ -63,6 +64,14 @@ public class Shop implements Serializable {
 
     public void setOwner_mobile(String owner_mobile) {
         this.owner_mobile = owner_mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {

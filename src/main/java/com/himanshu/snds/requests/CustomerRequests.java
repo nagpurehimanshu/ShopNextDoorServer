@@ -12,6 +12,7 @@ public class CustomerRequests {
     String name;
     String gender;
     String mobile;
+    String email;
     String address;
     String username;
     String password;
@@ -39,6 +40,14 @@ public class CustomerRequests {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getGender() {

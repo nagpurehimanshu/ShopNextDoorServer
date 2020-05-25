@@ -34,6 +34,7 @@ public class CustomerService {
                 newCustomer.setName(customerRequests.getName());
                 newCustomer.setGender(customerRequests.getGender());
                 newCustomer.setMobile(customerRequests.getMobile());
+                newCustomer.setEmail(customerRequests.getEmail());
                 newCustomer.setAddress(customerRequests.getAddress());
                 newCustomer.setUsername(customerRequests.getUsername());
                 newCustomer.setPassword(customerRequests.getPassword());
@@ -59,6 +60,7 @@ public class CustomerService {
             customerRequests.setAddress(customer.getAddress());
             customerRequests.setGender(customer.getGender());
             customerRequests.setMobile(customer.getMobile());
+            customerRequests.setEmail(customer.getEmail());
             customerRequests.setPassword(customer.getPassword());
         }
         //Does not exist
@@ -79,6 +81,7 @@ public class CustomerService {
                 customerRequestsList.get(i).setAddress(customerList.get(i).getAddress());
                 customerRequestsList.get(i).setGender(customerList.get(i).getGender());
                 customerRequestsList.get(i).setMobile(customerList.get(i).getMobile());
+                customerRequestsList.get(i).setEmail(customerList.get(i).getEmail());
                 customerRequestsList.get(i).setUsername(customerList.get(i).getUsername());
                 customerRequestsList.get(i).setPassword(customerList.get(i).getPassword());
                 customerRequestsList.get(i).setResult("1");
@@ -90,9 +93,10 @@ public class CustomerService {
         return customerRequestsList;
     }
 
-    public String updateCustomer(String username, String mobile, String address) {
+    public String updateCustomer(String username, String mobile, String address, String email) {
         Customer customer = customerRepository.findByUsername(username);
         customer.setMobile(mobile);
+        customer.setEmail(email);
         customer.setAddress(address);
         customerRepository.save(customer);
         return "1";

@@ -70,9 +70,9 @@ public class Controller {
     }
 
     @PutMapping("/updateCustomer")
-    ResponseEntity<String> updateCustomer(@RequestParam String username, @RequestParam String mobile, @RequestParam String address){
+    ResponseEntity<String> updateCustomer(@RequestParam String username, @RequestParam String mobile, @RequestParam String address, @RequestParam String email){
         try{
-            return new ResponseEntity<String>(customerService.updateCustomer(username, mobile, address), HttpStatus.OK);
+            return new ResponseEntity<String>(customerService.updateCustomer(username, mobile, address, email), HttpStatus.OK);
         }catch (Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -117,9 +117,9 @@ public class Controller {
     }
 
     @PutMapping("/updateShop")
-    ResponseEntity<String> updateShop(@RequestParam String username, @RequestParam String owner_mobile, @RequestParam String address){
+    ResponseEntity<String> updateShop(@RequestParam String username, @RequestParam String owner_mobile, @RequestParam String address, @RequestParam String email){
         try{
-            return new ResponseEntity<String>(shopService.updateShop(username, owner_mobile, address), HttpStatus.OK);
+            return new ResponseEntity<String>(shopService.updateShop(username, owner_mobile, address, email), HttpStatus.OK);
         }catch (Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);

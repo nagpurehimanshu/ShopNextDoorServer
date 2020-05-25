@@ -11,6 +11,7 @@ public class ShopRequests {
     String address;
     String owner_name;
     String owner_mobile;
+    String email;
     String username;
     String password;
     String result;
@@ -53,6 +54,14 @@ public class ShopRequests {
 
     public void setOwner_mobile(String owner_mobile) {
         this.owner_mobile = owner_mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {

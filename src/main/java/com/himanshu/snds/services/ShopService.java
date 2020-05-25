@@ -32,6 +32,7 @@ public class ShopService {
             newShop.setAddress(shopRequests.getAddress());
             newShop.setOwner_name(shopRequests.getOwner_name());
             newShop.setOwner_mobile(shopRequests.getOwner_mobile());
+            newShop.setEmail(shopRequests.getEmail());
             newShop.setVerified(1);
             shopRepository.save(newShop);
 
@@ -58,6 +59,7 @@ public class ShopService {
             shopRequests.setPassword(shop.getPassword());
             shopRequests.setOwner_name(shop.getOwner_name());
             shopRequests.setOwner_mobile(shop.getOwner_mobile());
+            shopRequests.setEmail(shop.getEmail());
             shopRequests.setAddress(shop.getAddress());
             shopRequests.setName(shop.getName());
         }else{
@@ -77,6 +79,7 @@ public class ShopService {
                 shopRequestsList.get(i).setName(shopList.get(i).getName());
                 shopRequestsList.get(i).setAddress(shopList.get(i).getAddress());
                 shopRequestsList.get(i).setOwner_mobile(shopList.get(i).getOwner_mobile());
+                shopRequestsList.get(i).setEmail(shopList.get(i).getEmail());
                 shopRequestsList.get(i).setOwner_name(shopList.get(i).getOwner_name());
                 shopRequestsList.get(i).setUsername(shopList.get(i).getUsername());
                 shopRequestsList.get(i).setPassword(shopList.get(i).getPassword());
@@ -94,9 +97,10 @@ public class ShopService {
     }
 
 
-    public String updateShop(String username, String owner_mobile, String address) {
+    public String updateShop(String username, String owner_mobile, String address, String email) {
         Shop shop = shopRepository.findByUsername(username);
         shop.setOwner_mobile(owner_mobile);
+        shop.setEmail(email);
         shop.setAddress(address);
         shopRepository.save(shop);
         return "1";
