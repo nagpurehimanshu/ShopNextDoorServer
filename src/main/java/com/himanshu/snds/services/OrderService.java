@@ -23,7 +23,11 @@ import java.util.TimeZone;
 public class OrderService {
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
     ShopRepository shopRepository;
+
+    @Autowired
     CustomerRepository customerRepository;
 
     public OrderRequests placeOrder(OrderRequests orderRequests){
@@ -122,13 +126,14 @@ public class OrderService {
     }
 
 
-    public String updateOrderStatus(String order_number, String order_status) {
+    public String updateOrderStatus(String order_number, String order_status, int amount) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("IST"));
         String curr_datetime = sdf.format(new Date());
 
         Orders orders = orderRepository.findByOrderNumber(order_number);
         orders.setOrder_status(order_status);
+        orders.setAmount(amount);
 
         if(order_status.equals("accepted")){
             orders.setOrder_acceptance_date(curr_datetime);
