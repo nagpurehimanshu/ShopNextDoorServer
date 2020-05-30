@@ -31,6 +31,7 @@ public class Orders implements Serializable {
     String order_mode;
     String customer_name;
     String shop_name;
+    String rejection_msg;
 
     public String getOrder_placed_date() {
         return order_placed_date;
@@ -142,5 +143,13 @@ public class Orders implements Serializable {
 
     public void setOrder_type(String order_type) {
         this.order_type = order_type;
+    }
+
+    public String getRejection_msg() {
+        return rejection_msg;
+    }
+
+    public void setRejection_msg(String rejection_msg) {
+        this.rejection_msg = rejection_msg;
     }
 }

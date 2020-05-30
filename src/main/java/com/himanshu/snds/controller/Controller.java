@@ -194,9 +194,9 @@ public class Controller {
     }
 
     @PutMapping("/updateOrderStatus")
-    ResponseEntity<String> updateOrderStatus(@RequestParam String order_number, @RequestParam String order_status, @RequestParam int amount){
+    ResponseEntity<String> updateOrderStatus(@RequestParam String order_number, @RequestParam String order_status, @RequestParam int amount, @RequestParam String rejection_msg){
         try{
-            return new ResponseEntity<String>(orderService.updateOrderStatus(order_number, order_status, amount), HttpStatus.OK);
+            return new ResponseEntity<String>(orderService.updateOrderStatus(order_number, order_status, amount, rejection_msg), HttpStatus.OK);
         }catch (Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);

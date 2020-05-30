@@ -15,6 +15,7 @@ public class OrderRequests {
     String customer_name;
     String shop_name;
     String result;
+    String rejection_msg;
 
     public String getOrder_placed_date() {
         return order_placed_date;
@@ -126,5 +127,13 @@ public class OrderRequests {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getRejection_msg() {
+        return rejection_msg;
+    }
+
+    public void setRejection_msg(String rejection_msg) {
+        this.rejection_msg = rejection_msg;
     }
 }

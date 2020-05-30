@@ -52,6 +52,7 @@ public class OrderService {
         newOrder.setOrder_mode(orderRequests.getOrder_mode());
         newOrder.setCustomer_name(orderRequests.getCustomer_name());
         newOrder.setShop_name(orderRequests.getShop_name());
+        newOrder.setRejection_msg(orderRequests.getRejection_msg());
         orderRepository.save(newOrder);
 
         orderRequests.setOrder_number(newOrder.getOrder_number());
@@ -78,6 +79,7 @@ public class OrderService {
         orderRequests.setShop_username(orders.getShop_username());
         orderRequests.setCustomer_name(orders.getCustomer_name());
         orderRequests.setShop_name(orders.getShop_name());
+        orderRequests.setRejection_msg(orders.getRejection_msg());
         orderRequests.setResult(shop.getAddress());
 
         return orderRequests;
@@ -108,6 +110,7 @@ public class OrderService {
             orderRequestsList.get(i).setCustomer_name(ordersList.get(i).getCustomer_name());
             orderRequestsList.get(i).setShop_name(ordersList.get(i).getShop_name());
             orderRequestsList.get(i).setShop_username(ordersList.get(i).getShop_username());
+            orderRequestsList.get(i).setRejection_msg(ordersList.get(i).getRejection_msg());
             Shop shop = shopRepository.findByUsername(ordersList.get(i).getShop_username());
             orderRequestsList.get(i).setResult(shop.getAddress());
         }
@@ -126,7 +129,7 @@ public class OrderService {
     }
 
 
-    public String updateOrderStatus(String order_number, String order_status, int amount) {
+    public String updateOrderStatus(String order_number, String order_status, int amount, String rejection_msg) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("IST"));
         String curr_datetime = sdf.format(new Date());
@@ -139,7 +142,11 @@ public class OrderService {
             orders.setOrder_acceptance_date(curr_datetime);
         }else if(order_status.equals("completed")){
             orders.setOrder_completion_date(curr_datetime);
-        }else if(order_status.equals("cancelled")){
+        }else if(order_status.equals("rejected")){
+            orders.setRejection_msg(rejection_msg);
+            orders.setOrder_completion_date(curr_datetime);
+        }
+        else if(order_status.equals("cancelled")){
             orders.setOrder_completion_date(curr_datetime);
         }
         orderRepository.save(orders);
@@ -166,6 +173,7 @@ public class OrderService {
             orderRequestsList.get(i).setOrder_type(ordersList.get(i).getOrder_type());
             orderRequestsList.get(i).setCustomer_name(ordersList.get(i).getCustomer_name());
             orderRequestsList.get(i).setShop_name(ordersList.get(i).getShop_name());
+            orderRequestsList.get(i).setRejection_msg(ordersList.get(i).getRejection_msg());
             Customer customer = customerRepository.findByUsername(ordersList.get(i).getCustomer_username());
             orderRequestsList.get(i).setResult(customer.getAddress());
             orderRequestsList.get(i).setShop_username(ordersList.get(i).getShop_username());
